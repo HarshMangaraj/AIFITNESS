@@ -1,0 +1,424 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: AI Fitness Coach API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: auth
+    description: Authentication operations
+  - name: workout
+    description: Workout plan operations
+  - name: progress
+    description: Daily progress tracking operations
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      description: Returns server health status
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Logged in
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /workout/generate:
+    post:
+      operationId: generateWorkout
+      tags: [workout]
+      summary: Generate AI workout plan
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GenerateWorkoutRequest"
+      responses:
+        "201":
+          description: Workout plan generated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkoutPlanResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /workout/plans:
+    get:
+      operationId: getWorkoutPlans
+      tags: [workout]
+      summary: Get all workout plans for authenticated user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: List of workout plans
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/WorkoutPlanResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /workout/plans/{id}:
+    get:
+      operationId: getWorkoutPlan
+      tags: [workout]
+      summary: Get a specific workout plan
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Workout plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WorkoutPlanResponse"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /progress:
+    post:
+      operationId: createProgressEntry
+      tags: [progress]
+      summary: Upload a new daily progress photo
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProgressRequest"
+      responses:
+        "201":
+          description: Progress entry created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProgressEntryResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    get:
+      operationId: getProgressEntries
+      tags: [progress]
+      summary: Get all progress entries for a specific workout plan
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: planId
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Filter progress entries by workout plan ID
+      responses:
+        "200":
+          description: List of progress entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ProgressEntryResponse"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 6
+        name:
+          type: string
+      required:
+        - email
+        - password
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+        user:
+          $ref: "#/components/schemas/UserResponse"
+      required:
+        - token
+        - user
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        name:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - email
+        - createdAt
+
+    UserProfile:
+      type: object
+      properties:
+        height:
+          type: string
+          description: Height (e.g. "5ft 10in" or "178cm")
+        weight:
+          type: string
+          description: Weight (e.g. "75kg" or "165lbs")
+        age:
+          type: integer
+        activityLevel:
+          type: string
+          enum: [sedentary, lightly_active, moderately_active, very_active, extremely_active]
+        goals:
+          type: string
+          description: Fitness goals
+        injuries:
+          type: string
+          nullable: true
+          description: Any injuries or physical limitations
+        allergies:
+          type: string
+          nullable: true
+          description: Dietary allergies or restrictions
+        equipment:
+          type: string
+          nullable: true
+          description: Available workout equipment (e.g. full gym, dumbbells only, no equipment)
+      required:
+        - height
+        - weight
+        - age
+        - activityLevel
+        - goals
+
+    GenerateWorkoutRequest:
+      type: object
+      properties:
+        userProfile:
+          $ref: "#/components/schemas/UserProfile"
+        photoBase64:
+          type: string
+          nullable: true
+          description: Base64-encoded image of user physique (optional)
+      required:
+        - userProfile
+
+    WorkoutPlanResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        plan:
+          type: object
+          description: The AI-generated workout plan
+          additionalProperties: true
+        userProfile:
+          $ref: "#/components/schemas/UserProfile"
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - plan
+        - userProfile
+        - createdAt
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+      required:
+        - error
+
+    CreateProgressRequest:
+      type: object
+      properties:
+        planId:
+          type: string
+          description: The ID of the workout plan this progress belongs to
+        photoBase64:
+          type: string
+          description: Base64-encoded image of daily progress
+      required:
+        - planId
+        - photoBase64
+
+    ProgressEntryResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        planId:
+          type: string
+        photoBase64:
+          type: string
+        aiFeedback:
+          type: string
+          description: AI-generated feedback for the progress
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - planId
+        - photoBase64
+        - aiFeedback
+        - createdAt

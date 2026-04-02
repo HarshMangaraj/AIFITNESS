@@ -1,0 +1,19 @@
+packages:
+  "framer-motion": "For fluid, stunning step-by-step chat animations and page transitions"
+  "lucide-react": "For beautiful, crisp icons throughout the application"
+  "date-fns": "For elegant date formatting on workout plans"
+  "clsx": "Utility for constructing CSS class names"
+  "tailwind-merge": "Utility for merging tailwind classes"
+
+images:
+  - path: "artifacts/web/public/images/login-hero.png"
+    description: "Cinematic, moody photography of a high-end luxury gym with dark lighting and subtle neon green accents. Professional fitness aesthetic."
+    aspect_ratio: "16:9"
+  - path: "artifacts/web/public/images/empty-dashboard.png"
+    description: "Abstract, modern glowing neon green 3D topographic mesh on a deep dark background, representing data and fitness tech."
+    aspect_ratio: "16:9"
+
+notes:
+  - "Using @workspace/api-client-react for TanStack Query hooks"
+  - "Tokens are passed via standard request headers in the generated hooks"
+  - "Dark mode default aesthetic, professional fitness coach style"

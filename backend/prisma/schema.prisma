@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id           String        @id @default(cuid())
+  email        String        @unique
+  password     String
+  name         String?
+  createdAt    DateTime      @default(now())
+  updatedAt       DateTime        @updatedAt
+  workoutPlans    WorkoutPlan[]
+  progressEntries ProgressEntry[]
+}
+
+model WorkoutPlan {
+  id              String          @id @default(cuid())
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  plan            Json
+  userProfile     Json
+  createdAt       DateTime        @default(now())
+  progressEntries ProgressEntry[]
+}
+
+model ProgressEntry {
+  id          String      @id @default(cuid())
+  userId      String
+  user        User        @relation(fields: [userId], references: [id])
+  planId      String
+  plan        WorkoutPlan @relation(fields: [planId], references: [id], onDelete: Cascade)
+  photoBase64 String
+  aiFeedback  String
+  createdAt   DateTime    @default(now())
+}
