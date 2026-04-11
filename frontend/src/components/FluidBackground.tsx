@@ -99,7 +99,7 @@ function FloatingMesh() {
     }
   `;
 
-  useFrame((state) => {
+  useFrame((state: any) => {
     if (material.current) {
       material.current.uniforms.uTime.value = state.clock.elapsedTime;
     }
@@ -139,7 +139,7 @@ function FloatingParticles() {
     return positions;
   }, []);
 
-  useFrame((state) => {
+  useFrame((state: any) => {
     if (points.current) {
       points.current.rotation.y = state.clock.elapsedTime * 0.02;
       points.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.01) * 0.1;
@@ -154,6 +154,7 @@ function FloatingParticles() {
           count={particles.length / 3}
           array={particles}
           itemSize={3}
+          args={[particles, 3]}
         />
       </bufferGeometry>
       <pointsMaterial

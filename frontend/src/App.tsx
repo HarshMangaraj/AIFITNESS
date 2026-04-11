@@ -10,6 +10,7 @@ import Dashboard from "@/pages/Dashboard";
 import GeneratePlan from "@/pages/GeneratePlan";
 import PlanDetail from "@/pages/PlanDetail";
 import ProgressTracker from "@/pages/ProgressTracker";
+import ScanAI from "@/pages/ScanAI";
 import NotFound from "@/pages/not-found";
 
 const queryClient = new QueryClient({
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/generate" component={GeneratePlan} />
       <Route path="/plans/:id/progress" component={ProgressTracker} />
       <Route path="/plans/:id" component={PlanDetail} />
+      <Route path="/scan-ai" component={ScanAI} />
       <Route component={NotFound} />
     </Switch>
   );

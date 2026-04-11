@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Dumbbell, ArrowRight, Activity, Zap, ShieldCheck } from "lucide-react";
-import { useLogin, useRegister } from "@workspace/api-client-react";
+import { useLogin, useRegister } from "@/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import { Button, cn } from "@/components/Layout";
 

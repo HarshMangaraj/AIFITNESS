@@ -3,7 +3,7 @@ import { useLocation, useParams } from "wouter";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { ArrowLeft, Calendar, User as UserIcon, Activity, AlertTriangle, Apple, Camera, CheckCircle2 } from "lucide-react";
-import { useGetWorkoutPlan } from "@workspace/api-client-react";
+import { useGetWorkoutPlan } from "@/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import { Layout, Button } from "@/components/Layout";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";

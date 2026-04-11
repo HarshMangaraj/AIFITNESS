@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { MessageSquare, BarChart3, Dumbbell } from "lucide-react";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
 
@@ -28,7 +28,7 @@ export default function ShowcaseSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(containerRef, { once: true, margin: "-100px" });
 
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     visible: { 
       opacity: 1,
@@ -38,7 +38,7 @@ export default function ShowcaseSection() {
     }
   };
 
-  const itemVariants = {
+  const itemVariants: Variants = {
     hidden: { opacity: 0, y: 20 },
     visible: { 
       opacity: 1, 
@@ -81,16 +81,16 @@ export default function ShowcaseSection() {
           animate={isInView ? "visible" : "hidden"}
           className="space-y-6 lg:space-y-0 lg:grid lg:grid-cols-3 lg:gap-8"
         >
-          {steps.map((step, i) => (
+          {steps.map((step) => (
             <motion.div
               key={step.step}
               variants={itemVariants}
               className="group"
             >
-              <SpotlightCard className="h-full p-8 border-white/10 bg-white/[0.03] backdrop-blur-3xl relative overflow-hidden transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/[0.08] shadow-xl">
+              <SpotlightCard className="h-full p-8 border-white/10 bg-white/3 backdrop-blur-3xl relative overflow-hidden transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/8 shadow-xl">
                 {/* Step number watermark - Compacted */}
                 <div
-                  className="absolute -top-6 -right-6 font-display text-[120px] font-black leading-none select-none text-white/[0.03] group-hover:text-white/[0.05] transition-all duration-500 italic"
+                  className="absolute -top-6 -right-6 font-display text-[120px] font-black leading-none select-none text-white/3 group-hover:text-white/5 transition-all duration-500 italic"
                 >
                   {step.step}
                 </div>

@@ -14,7 +14,7 @@ export default function CTASection() {
       >
         <div className="bg-white/5 backdrop-blur-3xl border border-white/10 p-12 md:p-24 rounded-[3rem] shadow-xl relative overflow-hidden group hover:border-white/20 transition-all duration-500">
           {/* Dashboard-style light rays - Compacted */}
-          <div className="absolute top-[-50%] start-[-20%] w-full h-full bg-white/5 blur-[100px] pointer-events-none rotate-45" />
+          <div className="absolute top-[-50%] inset-s-[-20%] w-full h-full bg-white/5 blur-[100px] pointer-events-none rotate-45" />
           
           <h2 className="font-display text-4xl sm:text-6xl md:text-7xl font-black text-white mb-8 uppercase tracking-tighter leading-[0.9] italic group-hover:text-zinc-200 transition-colors">
             BECOME <br />

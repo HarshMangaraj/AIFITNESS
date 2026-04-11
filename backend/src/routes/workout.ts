@@ -85,7 +85,7 @@ router.get("/plans/:id", requireAuth, async (req: AuthenticatedRequest, res) => 
   try {
     const { id } = req.params;
     const plan = await prisma.workoutPlan.findFirst({
-      where: { id, userId: req.user!.userId },
+      where: { id: id as string, userId: req.user!.userId },
     });
 
     if (!plan) {

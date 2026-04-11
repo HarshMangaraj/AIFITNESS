@@ -1,17 +1,17 @@
 {
-  "extends": "../tsconfig.base.json",
   "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "outDir": "dist",
     "rootDir": "src",
-    "types": ["node"]
-  },
-  "include": ["src"],
-  "references": [
-    {
-      "path": "../lib/db"
-    },
-    {
-      "path": "../lib/api-zod"
+    "types": ["node"],
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "paths": {
+      "@/*": ["./src/*"]
     }
-  ]
+  },
+  "include": ["src"]
 }

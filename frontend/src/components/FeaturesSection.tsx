@@ -54,7 +54,7 @@ function FeatureCard({
       transition={{ duration: 0.5, delay: index * 0.05, ease: "easeOut" }}
       className="group"
     >
-      <SpotlightCard className="h-full p-8 border-white/10 bg-white/[0.03] backdrop-blur-3xl transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/[0.08] shadow-xl relative overflow-hidden">
+      <SpotlightCard className="h-full p-8 border-white/10 bg-white/3 backdrop-blur-3xl transition-all duration-300 group-hover:border-white/20 group-hover:bg-white/8 shadow-xl relative overflow-hidden">
         <div
           className="w-12 h-12 rounded-xl flex items-center justify-center mb-6 border border-white/10 bg-white/5 transition-all duration-300 group-hover:scale-105 group-hover:bg-white/10"
         >

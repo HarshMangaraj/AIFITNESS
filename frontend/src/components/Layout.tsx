@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Link, useLocation } from "wouter";
-import { Dumbbell, LogOut, User, Menu, X, Plus } from "lucide-react";
+import { Dumbbell, LogOut, User, Menu, X, Plus, Camera } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -44,6 +44,10 @@ export function Layout({ children }: { children: ReactNode }) {
               <Link href="/generate" className="text-sm font-medium text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
                 <Plus className="w-4 h-4" />
                 New Plan
+              </Link>
+              <Link href="/scan-ai" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                <Camera className="w-4 h-4" />
+                Scan AI
               </Link>
               
               <div className="h-6 w-px bg-white/10" />
@@ -93,6 +97,10 @@ export function Layout({ children }: { children: ReactNode }) {
                 <Link href="/generate" onClick={() => setMobileMenuOpen(false)} className="flex p-3 rounded-xl bg-primary/10 text-primary font-medium items-center gap-2">
                   <Plus className="w-5 h-5" />
                   Generate New Plan
+                </Link>
+                <Link href="/scan-ai" onClick={() => setMobileMenuOpen(false)} className="flex p-3 rounded-xl bg-secondary/50 text-foreground font-medium items-center gap-2">
+                  <Camera className="w-5 h-5" />
+                  Scan AI
                 </Link>
                 <div className="h-px w-full bg-white/5 my-2" />
                 <button

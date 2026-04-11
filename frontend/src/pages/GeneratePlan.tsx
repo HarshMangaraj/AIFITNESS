@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, Upload, SkipForward, Zap, Bot, Loader2, CheckCircle2 } from "lucide-react";
-import { useGenerateWorkout, type UserProfileActivityLevel } from "@workspace/api-client-react";
+import { useGenerateWorkout, type UserProfileActivityLevel } from "@/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import { Layout, cn } from "@/components/Layout";
 

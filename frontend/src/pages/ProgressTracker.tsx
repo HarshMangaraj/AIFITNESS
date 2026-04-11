@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { Camera, ImagePlus, Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/Layout";
 import { useToast } from "@/hooks/use-toast";
-import { useGetProgressEntries, useCreateProgressEntry } from "@workspace/api-client-react";
+import { useGetProgressEntries, useCreateProgressEntry } from "@/api-client";
 import { useAuth } from "@/hooks/use-auth";
 
 export default function ProgressTracker() {
@@ -189,7 +189,7 @@ export default function ProgressTracker() {
             </div>
           ) : (
             <div className="space-y-6">
-              {entries.map((entry) => (
+              {entries.map((entry: any) => (
                 <div key={entry.id} className="glass-panel rounded-2xl overflow-hidden border border-white/5 flex flex-col md:flex-row shadow-2xl">
                   <div className="md:w-1/3 bg-black/40 relative">
                     <img 

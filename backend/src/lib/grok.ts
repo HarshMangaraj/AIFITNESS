@@ -177,3 +177,71 @@ Do NOT use markdown structuring like headers, just plain text paragraphs.`;
 
   return content.trim();
 }
+
+export async function analyzeFoodImage(
+  photoBase64: string
+): Promise<any> {
+  const geminiApiKey = process.env.GEMINI_API_KEY;
+  if (!geminiApiKey) {
+    throw new Error("GEMINI_API_KEY is missing for Vision processing.");
+  }
+
+  const systemPrompt = `You are an expert nutritionist. 
+Analyze the image provided and identify the food item. 
+Provide a detailed nutritional breakdown including:
+- Food Name
+- Estimated Calories (kcal)
+- Protein (g)
+- Carbohydrates (g)
+- Fats (g)
+- Estimated Portion Size
+
+Structure your response as a valid JSON object. 
+Example:
+{
+  "foodName": "Avocado Toast with Egg",
+  "calories": 350,
+  "protein": 12,
+  "carbs": 25,
+  "fats": 22,
+  "portionSize": "1 slice of sourdough with half an avocado and 1 poached egg",
+  "confidence": 0.95
+}
+Respond ONLY with the JSON object.`;
+
+  const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      contents: [
+        {
+          parts: [
+            { text: systemPrompt },
+            {
+              inline_data: {
+                mime_type: "image/jpeg",
+                data: photoBase64
+              }
+            }
+          ]
+        }
+      ],
+      generationConfig: {
+        responseMimeType: "application/json"
+      }
+    })
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    throw new Error(`Gemini API error ${response.status}: ${errorText}`);
+  }
+
+  const data = await response.json() as any;
+  const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+  if (!content) {
+    throw new Error("No content returned from Gemini API");
+  }
+
+  return JSON.parse(content);
+}

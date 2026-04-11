@@ -3,7 +3,7 @@ import { useLocation, Link } from "wouter";
 import { format } from "date-fns";
 import { motion } from "framer-motion";
 import { Plus, ChevronRight, Activity, Calendar, Zap, AlertCircle } from "lucide-react";
-import { useGetWorkoutPlans } from "@workspace/api-client-react";
+import { useGetWorkoutPlans } from "@/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import { Layout, Button } from "@/components/Layout";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
@@ -66,7 +66,7 @@ export default function Dashboard() {
 
         {plansLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[1, 2, 3].map(i => (
+            {[1, 2, 3].map((i: number) => (
               <div key={i} className="h-64 rounded-2xl bg-secondary/30 animate-pulse border border-white/5" />
             ))}
           </div>
@@ -105,7 +105,7 @@ export default function Dashboard() {
           </motion.div>
         ) : (
           <div className="flex flex-wrap gap-6 justify-center lg:justify-start">
-            {plans?.map((plan, i) => (
+            {plans?.map((plan: any, i: number) => (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
