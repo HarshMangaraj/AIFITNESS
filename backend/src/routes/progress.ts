@@ -70,7 +70,7 @@ router.get("/", requireAuth, async (req: AuthenticatedRequest, res) => {
     });
 
     res.json(
-      entries.map((e) => ({
+      entries.map((e: any) => ({
         id: e.id,
         userId: e.userId,
         planId: e.planId,

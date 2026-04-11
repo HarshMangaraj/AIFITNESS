@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useLocation, useParams } from "wouter";
 import { format } from "date-fns";
-import { Camera, ImagePlus, Loader2, ArrowLeft } from "lucide-react";
+import { Camera, Loader2, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/Layout";
 import { useToast } from "@/hooks/use-toast";
 import { useGetProgressEntries, useCreateProgressEntry } from "@/api-client";

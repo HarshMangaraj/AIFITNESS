@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Upload, SkipForward, Zap, Bot, Loader2, CheckCircle2 } from "lucide-react";
+import { Send, Upload, SkipForward, Zap, Bot } from "lucide-react";
 import { useGenerateWorkout, type UserProfileActivityLevel } from "@/api-client";
 import { useAuth } from "@/hooks/use-auth";
 import { Layout, cn } from "@/components/Layout";
@@ -118,7 +118,7 @@ export default function GeneratePlan() {
   const [selectedChips, setSelectedChips] = useState<string[]>([]);
   const [profile, setProfile] = useState<Record<string, string>>({});
   const [photoBase64, setPhotoBase64] = useState<string | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
   const [isGenerating, setIsGenerating] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [pendingNextStep, setPendingNextStep] = useState(false);
@@ -146,7 +146,7 @@ export default function GeneratePlan() {
     }, 500);
   };
 
-  const handleAnswer = (answer: string, displayAnswer: string, updatedProfile: Record<string, string>) => {
+  const handleAnswer = (_answer: string, displayAnswer: string, updatedProfile: Record<string, string>) => {
     addMessage({ role: "user", content: displayAnswer });
     advanceToStep(currentStep + 1, updatedProfile);
   };
@@ -201,7 +201,6 @@ export default function GeneratePlan() {
     const reader = new FileReader();
     reader.onloadend = () => {
       const result = reader.result as string;
-      setPhotoPreview(result);
       setPhotoBase64(result.split(",")[1]);
       const updated = { ...profile, photo: "uploaded" };
       setProfile(updated);
