@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "start": "tsx src/index.ts",
+    "start": "node dist/index.mjs",
     "build": "prisma generate && node build.mjs",
     "typecheck": "prisma generate && tsc -p tsconfig.json --noEmit",
     "postinstall": "prisma generate"
