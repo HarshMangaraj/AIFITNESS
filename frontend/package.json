@@ -41,7 +41,7 @@
     "@tanstack/react-query": "^5.66.0",
     "clsx": "^2.1.1",
     "cmdk": "1.0.0",
-    "date-fns": "^4.1.0",
+    "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.5.2",
     "framer-motion": "^12.4.3",
     "gsap": "^3.12.7",
