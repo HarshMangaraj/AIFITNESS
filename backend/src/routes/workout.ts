@@ -67,7 +67,7 @@ router.get("/plans", requireAuth, async (req: AuthenticatedRequest, res) => {
     });
 
     res.json(
-      plans.map((p) => ({
+      plans.map((p: any) => ({
         id: p.id,
         userId: p.userId,
         plan: p.plan,
