@@ -1,11 +1,11 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, Response } from "express";
 import { prisma } from "../lib/prisma.js";
 import { requireAuth, type AuthenticatedRequest } from "../lib/auth.js";
 import { generateWorkoutPlan } from "../lib/grok.js";
 
 const router: IRouter = Router();
 
-router.post("/generate", requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post("/generate", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { userProfile, photoBase64 } = req.body as {
       userProfile?: {
@@ -53,13 +53,13 @@ router.post("/generate", requireAuth, async (req: AuthenticatedRequest, res) => 
       userProfile: workoutPlan.userProfile,
       createdAt: workoutPlan.createdAt,
     });
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Workout generation failed");
     res.status(500).json({ error: "internal_error", message: "Failed to generate workout plan" });
   }
 });
 
-router.get("/plans", requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get("/plans", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const plans = await prisma.workoutPlan.findMany({
       where: { userId: req.user!.userId },
@@ -75,13 +75,13 @@ router.get("/plans", requireAuth, async (req: AuthenticatedRequest, res) => {
         createdAt: p.createdAt,
       }))
     );
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Get workout plans failed");
     res.status(500).json({ error: "internal_error", message: "Failed to get workout plans" });
   }
 });
 
-router.get("/plans/:id", requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get("/plans/:id", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { id } = req.params;
     const plan = await prisma.workoutPlan.findFirst({
@@ -100,7 +100,7 @@ router.get("/plans/:id", requireAuth, async (req: AuthenticatedRequest, res) => 
       userProfile: plan.userProfile,
       createdAt: plan.createdAt,
     });
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Get workout plan failed");
     res.status(500).json({ error: "internal_error", message: "Failed to get workout plan" });
   }

@@ -1,11 +1,11 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { prisma } from "../lib/prisma.js";
 import { signToken, requireAuth, type AuthenticatedRequest } from "../lib/auth.js";
 
 const router: IRouter = Router();
 
-router.post("/register", async (req, res) => {
+router.post("/register", async (req: Request, res: Response) => {
   try {
     const { email, password, name } = req.body as {
       email?: string;
@@ -45,13 +45,13 @@ router.post("/register", async (req, res) => {
         createdAt: user.createdAt,
       },
     });
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Registration failed");
     res.status(500).json({ error: "internal_error", message: "Registration failed" });
   }
 });
 
-router.post("/login", async (req, res) => {
+router.post("/login", async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body as {
       email?: string;
@@ -86,13 +86,13 @@ router.post("/login", async (req, res) => {
         createdAt: user.createdAt,
       },
     });
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Login failed");
     res.status(500).json({ error: "internal_error", message: "Login failed" });
   }
 });
 
-router.get("/me", requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get("/me", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user!.userId },
@@ -105,7 +105,7 @@ router.get("/me", requireAuth, async (req: AuthenticatedRequest, res) => {
     }
 
     res.json(user);
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Get me failed");
     res.status(500).json({ error: "internal_error", message: "Failed to get user" });
   }

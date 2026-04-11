@@ -1,11 +1,11 @@
-import { Router, type IRouter } from "express";
+import { Router, type IRouter, Response } from "express";
 import { prisma } from "../lib/prisma.js";
 import { requireAuth, type AuthenticatedRequest } from "../lib/auth.js";
 import { analyzeProgressPhoto } from "../lib/grok.js";
 
 const router: IRouter = Router();
 
-router.post("/", requireAuth, async (req: AuthenticatedRequest, res) => {
+router.post("/", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { photoBase64, planId } = req.body as { photoBase64?: string | null; planId?: string };
 
@@ -52,7 +52,7 @@ router.post("/", requireAuth, async (req: AuthenticatedRequest, res) => {
   }
 });
 
-router.get("/", requireAuth, async (req: AuthenticatedRequest, res) => {
+router.get("/", requireAuth, async (req: AuthenticatedRequest, res: Response) => {
   try {
     const { planId } = req.query as { planId?: string };
 
@@ -79,7 +79,7 @@ router.get("/", requireAuth, async (req: AuthenticatedRequest, res) => {
         createdAt: e.createdAt,
       }))
     );
-  } catch (err) {
+  } catch (err: any) {
     req.log.error({ err }, "Get progress entries failed");
     res.status(500).json({ error: "internal_error", message: "Failed to get progress entries" });
   }

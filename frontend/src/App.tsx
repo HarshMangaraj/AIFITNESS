@@ -11,7 +11,7 @@ import GeneratePlan from "@/pages/GeneratePlan";
 import PlanDetail from "@/pages/PlanDetail";
 import ProgressTracker from "@/pages/ProgressTracker";
 import ScanAI from "@/pages/ScanAI";
-import NotFound from "@/pages/not-found";
+import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient({
   defaultOptions: {
