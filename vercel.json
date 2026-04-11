@@ -2,16 +2,32 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/api/(.*)",
-      "destination": "/backend/api/index.ts"
+      "source": "/api/auth/(.*)",
+      "destination": "/api/auth.ts"
+    },
+    {
+      "source": "/api/food/(.*)",
+      "destination": "/api/food.ts"
+    },
+    {
+      "source": "/api/healthz",
+      "destination": "/api/health.ts"
+    },
+    {
+      "source": "/api/progress/(.*)",
+      "destination": "/api/progress.ts"
+    },
+    {
+      "source": "/api/workout/(.*)",
+      "destination": "/api/workout.ts"
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/dist/public/$1"
+      "destination": "/frontend/dist/$1"
     },
     {
       "source": "/(.*)",
-      "destination": "/frontend/dist/public/index.html"
+      "destination": "/frontend/dist/index.html"
     }
   ]
 }
