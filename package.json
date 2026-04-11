@@ -15,5 +15,9 @@
     "cross-env": "^7.0.3",
     "prettier": "^3.8.1",
     "typescript": "~5.9.2"
-  }
+  },
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
 }
