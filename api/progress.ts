@@ -1,12 +1,17 @@
+console.log("Progress API: Modules loading...");
 import express from "express";
-import { prisma } from "../backend/src/lib/prisma.js";
-import { requireAuth, type AuthenticatedRequest } from "../backend/src/lib/auth.js";
-import { analyzeProgressPhoto } from "../backend/src/lib/grok.js";
+import cors from "cors";
+import { prisma } from "./lib/prisma";
+import { requireAuth, type AuthenticatedRequest } from "./lib/auth";
+import { analyzeProgressPhoto } from "./lib/grok";
+
+console.log("Progress API: Backend libs loaded. Initializing app...");
 
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
-app.post("/api/progress", requireAuth, async (req: AuthenticatedRequest, res) => {
+app.post(["/api/progress", "/"], requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const { photoBase64, planId } = req.body;
     if (!photoBase64 || !planId) return res.status(400).json({ error: "bad_request", message: "photoBase64 and planId are required" });
@@ -25,7 +30,7 @@ app.post("/api/progress", requireAuth, async (req: AuthenticatedRequest, res) =>
   }
 });
 
-app.get("/api/progress", requireAuth, async (req: AuthenticatedRequest, res) => {
+app.get(["/api/progress", "/"], requireAuth, async (req: AuthenticatedRequest, res) => {
   try {
     const { planId } = req.query as { planId?: string };
     if (!planId) return res.status(400).json({ error: "bad_request", message: "planId query parameter is required" });

@@ -1,33 +1,37 @@
 {
-  "name": "ai-fitness-coach",
-  "version": "1.0.0",
+  "name": "ai-fitness-coach-monorepo",
+  "version": "1.1.0",
   "private": true,
   "scripts": {
     "dev": "node dev.js",
-    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend",
-    "build": "npm run build --prefix backend && npm run build --prefix frontend",
-    "typecheck": "npm run typecheck --prefix backend && npm run typecheck --prefix frontend",
-    "clean": "Remove-Item -Path node_modules, backend/node_modules, frontend/node_modules -Recurse -Force -ErrorAction SilentlyContinue"
+    "build": "npm run build --prefix frontend && npx prisma generate --schema=backend/prisma/schema.prisma",
+    "typecheck": "npm run typecheck --prefix frontend",
+    "clean": "echo 'Cleaning...'"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3",
     "@types/express": "^5",
     "@types/jsonwebtoken": "^9",
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.3.3",
     "concurrently": "^9.2.1",
     "cross-env": "^7.0.3",
-    "prettier": "^3.8.1",
     "typescript": "~5.9.2"
   },
   "dependencies": {
-    "@prisma/client": "^7.6.0",
+    "@prisma/adapter-pg": "^6.3.1",
+    "@prisma/client": "^6.3.1",
     "bcryptjs": "^3.0.3",
     "cors": "^2",
     "dotenv": "^16.4.5",
     "express": "^5",
     "jsonwebtoken": "^9.0.3",
+    "pg": "^8.13.1",
     "pino": "^9",
-    "prisma": "^7.6.0"
+    "prisma": "^6.3.1",
+    "zod": "^3.24.1"
   },
   "workspaces": [
     "frontend",

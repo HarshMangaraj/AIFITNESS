@@ -1,10 +1,15 @@
+console.log("Food API: Modules loading...");
 import express from "express";
-import { analyzeFoodImage } from "../backend/src/lib/grok.js";
+import cors from "cors";
+import { analyzeFoodImage } from "./lib/grok";
+
+console.log("Food API: Grok lib loaded. Initializing app...");
 
 const app = express();
+app.use(cors());
 app.use(express.json({ limit: "10mb" }));
 
-app.post("/api/food/scan", async (req, res) => {
+app.post(["/api/food/scan", "/scan"], async (req, res) => {
   try {
     const { image } = req.body;
     if (!image) return res.status(400).json({ message: "Image is required" });

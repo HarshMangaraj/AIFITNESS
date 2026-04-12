@@ -1,0 +1,13 @@
+node_modules
+backend/node_modules
+frontend/node_modules
+.git
+.local
+.cache
+dist
+frontend/dist
+.vercel
+*.log
+.env
+backend/.env
+frontend/.env

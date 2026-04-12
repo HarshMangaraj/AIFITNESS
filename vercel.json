@@ -3,23 +3,23 @@
   "rewrites": [
     {
       "source": "/api/auth/(.*)",
-      "destination": "/api/auth.ts"
+      "destination": "/api/auth"
     },
     {
       "source": "/api/food/(.*)",
-      "destination": "/api/food.ts"
+      "destination": "/api/food"
     },
     {
       "source": "/api/healthz",
-      "destination": "/api/health.ts"
+      "destination": "/api/health"
     },
     {
       "source": "/api/progress/(.*)",
-      "destination": "/api/progress.ts"
+      "destination": "/api/progress"
     },
     {
       "source": "/api/workout/(.*)",
-      "destination": "/api/workout.ts"
+      "destination": "/api/workout"
     },
     {
       "source": "/(.*)",
@@ -29,5 +29,6 @@
       "source": "/(.*)",
       "destination": "/frontend/dist/index.html"
     }
-  ]
+  ],
+  "outputDirectory": "frontend/dist"
 }

@@ -1,14 +1,19 @@
+console.log("Auth API: Modules loading...");
 import express from "express";
+import cors from "cors";
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import bcrypt from "bcryptjs";
-import { prisma } from "../backend/src/lib/prisma.js";
-import { signToken, requireAuth, type AuthenticatedRequest } from "../backend/src/lib/auth.js";
+import { prisma } from "./lib/prisma";
+import { signToken, requireAuth, type AuthenticatedRequest } from "./lib/auth";
+
+console.log("Auth API: Prisma and Auth libs loaded. Initializing app...");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Routes logic extracted from backend/src/routes/auth.ts
-app.post("/api/auth/register", async (req, res) => {
+app.post(["/api/auth/register", "/register"], async (req, res) => {
   try {
     const { email, password, name } = req.body;
     if (!email || !password) return res.status(400).json({ error: "bad_request", message: "Email and password are required" });
@@ -27,7 +32,7 @@ app.post("/api/auth/register", async (req, res) => {
   }
 });
 
-app.post("/api/auth/login", async (req, res) => {
+app.post(["/api/auth/login", "/login"], async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json({ error: "bad_request", message: "Email and password are required" });
