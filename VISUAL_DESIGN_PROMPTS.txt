@@ -1,0 +1,82 @@
+================================================================================
+AI FITNESS COACH - VISUAL DESIGN PROMPTS FOR CLAUDE
+================================================================================
+
+This file contains specialized prompts you can paste into Claude (or any AI 
+with visual generation capabilities) to create high-quality, professional 
+diagrams for each part of your system.
+
+--------------------------------------------------------------------------------
+1. PROMPT: DATA FLOW DIAGRAM (DFD LEVEL 0 & 1)
+--------------------------------------------------------------------------------
+"Act as a System Architect. Create a high-fidelity DFD Level-1 diagram for a 
+Full-Stack AI Fitness platform. Use a sleek dark-mode aesthetic with glows.
+- ACTOR: 'Authenticated User'.
+- PROCESSES: 'Auth Handler', 'Protocol Engine', 'Vision Scanner', 'Progress Tracker'.
+- STORES: 'PostgreSQL DB'.
+- EXTERNAL: 'Groq (Llama 3.3)' and 'Gemini 2.5 Flash'.
+Visualize the flow of 'Physique Scan' data moving from the user into the 
+Vision Process, then to Gemini, and finally being saved in the database."
+
+--------------------------------------------------------------------------------
+2. PROMPT: ER DIAGRAM (DATABASE DESIGN)
+--------------------------------------------------------------------------------
+"Create a professional Entity-Relationship (ER) Diagram for a fitness 
+monorepo. Use a modern technical style with clear lines and PK/FK markers.
+- Table 'USER': id, email, password, name.
+- Table 'WORKOUT_PLAN': id, userId (FK), plan (JSON), userProfile (JSON).
+- Table 'PROGRESS_ENTRY': id, userId (FK), planId (FK), photoBase64, aiFeedback.
+Show the 1:Many relationships clearly and explain how the JSON fields allow 
+the database to be flexible for different AI models."
+
+--------------------------------------------------------------------------------
+3. PROMPT: CLASS & COMPONENT DIAGRAM
+--------------------------------------------------------------------------------
+"Design a Component Hierarchy diagram showing the relationship between a 
+React/Vite Frontend and a Node.js/Serverless Backend.
+- FRONTEND: Showcase useAuth, useGenerateWorkout, and useScanFood hooks.
+- BACKEND: Showcase express-based handlers for Auth, Workout, and Food.
+- AI LAYER: Showcase the 'Grok.ts' abstraction layer that routes requests 
+  between Groq and Gemini Vision.
+- DB: Show the PrismaClient as the base layer for all storage."
+
+--------------------------------------------------------------------------------
+4. PROMPT: USE CASE DIAGRAM
+--------------------------------------------------------------------------------
+"Create a stylized Use Case Diagram for an 'AI Protocol Coach'. 
+- ACTOR: The 'Authenticated User'.
+- USE CASES: 'Engineering a Protocol', 'Scanning Progress Photos', 
+  'Analyzing Food Macros', and 'Reviewing AI Physiological Feedback'.
+- INCLUDES: Show that Generating a Protocol includes 'AI Vision Scan' if a 
+  photo is uploaded. 
+Design this with a futuristic, fitness-tech focused layout."
+
+--------------------------------------------------------------------------------
+5. PROMPT: UML SEQUENCE DIAGRAM (AI WORKFLOW)
+--------------------------------------------------------------------------------
+"Create a detailed UML Sequence Diagram showing the 'Lifecycle of an AI Plan 
+Request'. 
+- PARTICIPANTS: User, React Frontend, Express Backend, Gemini Vision, 
+  Groq Llama, Prisma DB.
+- FLOW: User uploads photo -> Frontend sends JWT request -> Backend calls 
+  Gemini for Body Analysis -> Logic layer calls Groq to build the workout 
+  based on analysis -> Results saved to DB -> Succcess returned to user.
+Make the arrows look like glowing energy paths to represent data transfer."
+
+--------------------------------------------------------------------------------
+6. PROMPT: MASTER SYSTEM OVERVIEW (THE COMPLETE BLUEPRINT)
+--------------------------------------------------------------------------------
+"Generate a Master System Architecture overview for 'AI Fitness Coach'. 
+Create a 3D isometric representation of the tech stack:
+- TOP LAYER (UI): Glassmorphic React dashboard with Tailwind 4.
+- MIDDLE LAYER (LOGIC): Vercel Serverless Functions and AI Processors.
+- BOTTOM LAYER (STORAGE): Neon PostgreSQL database.
+Add glowing threads connecting the layers to show 'Low Latency Protocol 
+Engineering' in action."
+
+--------------------------------------------------------------------------------
+TIPS FOR BEST RESULTS:
+- Always use 'Claude 3.5 Sonnet' for these prompts to get the best visual Artifacts.
+- If you want to change the color, add 'Use Azure Blue instead of Emerald Green' 
+  to the start of any prompt.
+================================================================================

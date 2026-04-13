@@ -120,21 +120,6 @@ export default function ScanAI() {
                   {/* Camera GUI Overlay */}
                   <div className="absolute inset-0 pointer-events-none border-12 border-black/40 shadow-[inset_0_0_100px_rgba(0,0,0,0.5)]" />
                   <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border-2 border-white/20 rounded-3xl" />
-                  
-                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-6 pointer-events-auto">
-                    <label className="p-3 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-white transition-all cursor-pointer group-hover:scale-110">
-                      <Upload className="w-6 h-6" />
-                      <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
-                    </label>
-                    <button
-                      onClick={capture}
-                      disabled={!isCameraReady}
-                      className="w-20 h-20 rounded-full border-4 border-white/30 flex items-center justify-center bg-white group/btn active:scale-95 transition-all shadow-[0_0_30px_rgba(255,255,255,0.3)]"
-                    >
-                      <div className="w-16 h-16 rounded-full bg-white border-2 border-zinc-200" />
-                    </button>
-                    <div className="w-12 h-12" /> {/* Spacer */}
-                  </div>
                 </motion.div>
               ) : (
                 <motion.div
@@ -146,40 +131,56 @@ export default function ScanAI() {
                 >
                   <img src={image} className="w-full h-full object-cover opacity-80" alt="Capture" />
                   <div className="absolute inset-0 bg-linear-to-t from-black/80 via-transparent to-transparent" />
-                  
-                  <div className="absolute top-4 left-4">
-                    <button 
-                      onClick={reset}
-                      className="flex items-center gap-2 px-4 py-2 rounded-xl bg-black/50 text-white backdrop-blur-md border border-white/10 hover:bg-black/70 transition-all font-bold text-sm"
-                    >
-                      <ArrowLeft className="w-4 h-4" />
-                      Retake
-                    </button>
-                  </div>
-
-                  <div className="absolute bottom-8 left-1/2 -translate-x-1/2 w-full max-w-sm px-4">
-                    <Button
-                      onClick={handleScan}
-                      disabled={isScanning}
-                      className="w-full h-16 rounded-2xl bg-primary text-black hover:bg-zinc-200 transition-all shadow-xl font-black text-xl flex items-center justify-center gap-3"
-                    >
-                      {isScanning ? (
-                        <>
-                          <Loader2 className="w-6 h-6 animate-spin" />
-                          Analyzing Food...
-                        </>
-                      ) : (
-                        <>
-                          <Sparkles className="w-6 h-6" />
-                          Scan with AI
-                        </>
-                      )}
-                    </Button>
-                  </div>
                 </motion.div>
               )}
             </AnimatePresence>
           </main>
+
+          {/* Standardized Controls Bar */}
+          <div className="mt-8 flex flex-col items-center gap-6">
+            {!image ? (
+              <div className="flex items-center justify-center gap-8">
+                <label className="p-4 rounded-full bg-white/5 border border-white/10 text-white transition-all cursor-pointer hover:bg-white/10 active:scale-90">
+                  <Upload className="w-6 h-6" />
+                  <input type="file" accept="image/*" className="hidden" onChange={handleFileUpload} />
+                </label>
+                <button
+                  onClick={capture}
+                  disabled={!isCameraReady}
+                  className="w-20 h-20 rounded-full border-4 border-white/30 flex items-center justify-center bg-white active:scale-90 transition-all shadow-2xl"
+                >
+                  <div className="w-14 h-14 rounded-full bg-white border-2 border-zinc-100" />
+                </button>
+                <div className="w-14" /> {/* Alignment Spacer */}
+              </div>
+            ) : (
+              <div className="w-full max-w-sm space-y-4">
+                <Button
+                  onClick={handleScan}
+                  disabled={isScanning}
+                  className="w-full h-16 rounded-2xl bg-primary text-black hover:bg-zinc-200 transition-all shadow-xl font-black text-xl flex items-center justify-center gap-3"
+                >
+                  {isScanning ? (
+                    <>
+                      <Loader2 className="w-6 h-6 animate-spin" />
+                      Analyzing...
+                    </>
+                  ) : (
+                    <>
+                      <Sparkles className="w-6 h-6" />
+                      Scan with AI
+                    </>
+                  )}
+                </Button>
+                <button 
+                  onClick={reset}
+                  className="w-full py-4 text-zinc-400 font-bold hover:text-white transition-colors"
+                >
+                  Retake Photo
+                </button>
+              </div>
+            )}
+          </div>
 
           <footer className="mt-8 flex justify-center">
             <p className="text-zinc-500 text-sm flex items-center gap-2 font-medium">

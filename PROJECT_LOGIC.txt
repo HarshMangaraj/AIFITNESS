@@ -1,0 +1,93 @@
+================================================================================
+AI FITNESS COACH - SYSTEM ARCHITECTURE & LOGIC GUIDE
+================================================================================
+
+This document provides an end-to-end technical explanation of how the AI Fitness
+Coach application functions, from user interaction to AI-powered decision making.
+
+--------------------------------------------------------------------------------
+1. CORE TECHNOLOGY STACK
+--------------------------------------------------------------------------------
+* FRONTEND: Vite + React + TypeScript. A high-performance Single Page App (SPA).
+* STYLING: Tailwind CSS + Framer Motion. Uses a custom "Glassmorphism" design system.
+* BACKEND: Node.js (Express logic) deployed as Vercel Serverless Functions.
+* DATABASE: PostgreSQL (via Neon) with Prisma ORM (Version 6).
+* AI ENGINES: 
+  - Groq (Llama 3.3-70B): Powers the text-based Workout Plan generation.
+  - Gemini 2.5 Flash: Powers Vision-based Food Analysis and Physique Review.
+
+--------------------------------------------------------------------------------
+2. AUTHENTICATION LOGIC (JWT)
+--------------------------------------------------------------------------------
+* FLOW: User signs up/in -> Server validates password (Bcrypt) -> Server signs a 
+  JSON Web Token (JWT) -> Frontend stores token in memory/state.
+* SECURE ACCESS: Every request to the backend (/api/*) must include an 
+  "Authorization: Bearer <TOKEN>" header.
+* PERSISTENCE: The `useAuth` hook in React manages the session and ensures only 
+  authenticated users can access the Dashboard or Generate Plan pages.
+
+--------------------------------------------------------------------------------
+3. PROTOCOL ENGINEERING (WORKOUT GENERATION)
+--------------------------------------------------------------------------------
+This is the "Brain" of the application (located in /api/lib/grok.ts).
+
+* INPUT: User's height, weight, goals, injuries, allergies, and equipment.
+* OPTIONAL INPUT: A physique photo (base64).
+* LOGIC:
+  1. The "Coach" (AI) receives a system prompt defining it as a "Protocol Engineer".
+  2. If a photo is provided, Gemini Vision analyzes the user's physique (posture, 
+     muscle distribution, areas needing development).
+  3. Groq then builds a structured JSON workout plan.
+  4. CRITICAL LOGIC: I have configured the AI to return 5-8 exercises per day, 
+     ensuring a high-volume, professional training block.
+  5. REASONING: If a photo was scanned, the AI includes a "Physique Analysis" 
+     explaining WHY specific exercises (e.g. Lat Pulldowns) were chosen for 
+     that specific user's body.
+
+--------------------------------------------------------------------------------
+4. SCAN AI (FOOD & NUTRITION)
+--------------------------------------------------------------------------------
+* LOGIC:
+  1. User takes a photo of their meal in the frontend (ScanAI.tsx).
+  2. The image is sent to the Vercel Function (/api/food/scan).
+  3. Gemini 2.5 Flash analyzes the image, identifies the food item, and estimates 
+     the portion size.
+  4. The AI returns a detailed nutritional breakdown (Calories, Protein, Carbs, Fats).
+  5. UI: The frontend displays this in a "Nutrition Result Modal".
+
+--------------------------------------------------------------------------------
+5. PROGRESS TRACKING & PHYSIQUE REVIEW
+--------------------------------------------------------------------------------
+* LOGIC:
+  1. Users upload daily progress photos.
+  2. The AI compares the photo against the user's current fitness goals.
+  3. VISION ANALYSIS: The AI provides constructive, motivating feedback on 
+     visible attributes (e.g. "Shoulders are looking more rounded," "Core 
+     definition is improving").
+  4. FEEDBACK: This creates a "feedback loop" that helps users stay consistent.
+
+--------------------------------------------------------------------------------
+6. DATABASE ARCHITECTURE (PRISMA)
+--------------------------------------------------------------------------------
+* SCHEMA: Located at /backend/prisma/schema.prisma.
+* User: Account info and relation to plans.
+* WorkoutPlan: Stores the AI-generated JSON protocol, user profile, and dates.
+* ProgressEntry: Stores the user's photos and the AI's feedback summaries.
+
+--------------------------------------------------------------------------------
+7. DEPLOYMENT & SCALABILITY
+--------------------------------------------------------------------------------
+* ARCHITECTURE: Monorepo. This allows the Frontend and Backend to share the same 
+  repository while being deployed as a single unit on Vercel.
+* SERVERLESS: Each API route is a standalone function. This means the app can 
+  scale to thousands of users without manual server management.
+* PRISMA OPTIMIZATION: Uses a pooled database connection (Neon) to handle the 
+  short-lived nature of serverless function cold starts.
+
+--------------------------------------------------------------------------------
+SUMMARY
+--------------------------------------------------------------------------------
+The project is built to feel like an "AI-First" experience. The logic is designed 
+to move away from generic templates toward a tailored, data-driven fitness 
+protocol that evolves as the user's physique changes.
+================================================================================

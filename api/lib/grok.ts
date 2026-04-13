@@ -21,11 +21,11 @@ export async function generateWorkoutPlan(
     throw new Error("GROK_API_KEY environment variable is required");
   }
 
-  const systemPrompt = `You are an expert personal trainer and nutritionist. 
-Your job is to create personalized workout plans based on user data. 
-Always respond with a structured JSON object containing the workout plan.
-The plan should be detailed, safe, and tailored to the user's specific needs.
-Respond ONLY with valid JSON — no markdown, no extra text.`;
+  const systemPrompt = `You are an expert personal trainer and nutritionist focusing on "Protocol Engineering". 
+  Your job is to create hyper-personalized workout plans based on user data and images. 
+  Your plans MUST be comprehensive: Each training day MUST have between 5 and 8 targeted exercises.
+  If a physique photo is provided, you MUST include a "Physique Analysis" section that reviews the user's body (posture, muscle development, areas of focus) and explains how this plan addresses those specific findings.
+  Always respond with a structured JSON object. Respond ONLY with valid JSON — no markdown, no extra text.`;
 
   const userMessageStr = buildUserMessage(userProfile);
 
@@ -110,12 +110,12 @@ ${profile.injuries ? `**Injuries/Limitations:** ${profile.injuries}` : ""}
 ${profile.allergies ? `**Dietary Allergies/Restrictions:** ${profile.allergies}` : ""}
 
 Please respond with a comprehensive JSON workout plan that includes:
-1. A weekly workout schedule (days, exercises, sets, reps, rest periods)
-2. Exercise descriptions and proper form tips
-3. Nutrition guidelines (macros, meal timing, sample meals)
-4. Progress tracking milestones
-5. Safety considerations based on any injuries
-6. Warm-up and cool-down routines
+1. A weekly workout schedule (days, exercises, sets, reps, rest periods). EACH training day MUST have at least 5-8 exercises.
+2. Exercise descriptions and proper form tips, with specific reasoning on why each exercise was chosen for THIS user.
+3. Nutrition guidelines (macros, meal timing, sample meals).
+4. Progress tracking milestones and a "Physique Analysis" or "Body Review" if a photo was provided.
+5. Safety considerations based on any injuries.
+6. Warm-up and cool-down routines.
 
 Structure your response as valid JSON with clear section keys.`;
 
