@@ -2,7 +2,7 @@
 
 A full-stack web application that uses computer vision and large language models to scan food for nutrition data, generate personalised workout plans, and track physical progress over time.
 
-**[Live Demo](#)** • **[GitHub](https://github.com/HarshMangaraj)**
+**[Live Demo](https://ai-fit-coach-wine.vercel.app/)** • **[GitHub](https://github.com/HarshMangaraj)**
 
 ---
 
@@ -212,4 +212,4 @@ After deploying, update the frontend API base URL to point to your live backend.
 ---
 
 Built by **Harsh Mangaraj**  
-[GitHub](https://github.com/HarshMangaraj) • [LinkedIn](https://linkedin.com/in/harsh-bardhan-mangaraj-1747b1304) • [Live Demo](#)
+[GitHub](https://github.com/HarshMangaraj) • [LinkedIn](https://linkedin.com/in/harsh-bardhan-mangaraj) • [Live Demo](https://ai-fit-coach-wine.vercel.app/) • [X](https://x.com/MangarajHarsh)
