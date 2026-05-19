@@ -211,5 +211,5 @@ After deploying, update the frontend API base URL to point to your live backend.
 
 ---
 
-Built by **Harsh Mangaraj**  
+Built by **Harsh Bardhan Mangaraj**  
 [GitHub](https://github.com/HarshMangaraj) • [LinkedIn](https://linkedin.com/in/harsh-bardhan-mangaraj) • [Live Demo](https://ai-fit-coach-wine.vercel.app/) • [X](https://x.com/MangarajHarsh)
